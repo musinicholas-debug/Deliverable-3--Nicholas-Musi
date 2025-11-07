@@ -25,4 +25,14 @@ print(df.duplicated())
 print(df.drop_duplicates())
 
 #c)
+print(df.isnull().sum())
+#Check missing values per column
+
+df['Electric Range'].fillna(df['Electric Range'].mean())
+#Fill missing numerical values (Electric Range) with the mean
+
+df['Electric Utility'].fillna('Unknown')
+# Fill missing categorical values (Electric Utility) with 'Unknown'
+
+#d)
 
