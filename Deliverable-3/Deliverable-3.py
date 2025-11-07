@@ -48,10 +48,10 @@ df["Vehicle Location"]= df["Vehicle Location"].fillna('Unknown')
 df["Electric Utility"]= df["Electric Utility"].fillna('Unknown')
 df["2020 Census Tract"]= df["2020 Census Tract"].fillna('Unknown')
 # Fill missing categorical values with 'Unknown'
-
 #Explanation: Keep all rows to preserve large dataset integrity. Use mean imputation for numeric columns to avoid data loss. Use “Unknown” for categorical columns to maintain clarity while keeping categorical values. 
 
 #d)
+#*************
 df["Model Year"] = pd.to_numeric(df["Model Year"])
 df["Electric Range"] = pd.to_numeric(df["Electric Range"])
 #Model Year should be numeric for trend or range calculations and electric range should also be numeric, since missing or non-numeric entries may have been stored as strings.
