@@ -28,11 +28,30 @@ print(df.drop_duplicates())
 print(df.isnull().sum())
 #Check missing values per column
 
-df['Electric Range'].fillna(df['Electric Range'].mean())
-#Fill missing numerical values (Electric Range) with the mean
+df["Electric Range"]= df["Electric Range"].fillna(df["Electric Range"].mean())
+df["Postal Code"]= df["Postal Code"].fillna(df["Postal Code"].mean())
+df["Model Year"]= df["Model Year"].fillna(df["Model Year"].mean())
+df["Electric Range"]= df["Electric Range"].fillna(df["Electric Range"].mean())
+df["Base MSRP"]= df["Base MSRP"].fillna(df["Base MSRP"].mean())
+df["Legislative District"]= df["Legislative District"].fillna(df["Legislative District"].mean())
+df["DOL Vehicle ID"]= df["DOL Vehicle ID"].fillna(df["DOL Vehicle ID"].mean())
+#Fill missing numerical values with the mean
 
-df['Electric Utility'].fillna('Unknown')
-# Fill missing categorical values (Electric Utility) with 'Unknown'
+df["County"]= df["County"].fillna('Unknown')
+df["City"]= df["City"].fillna('Unknown')
+df["State"]= df["State"].fillna('Unknown')
+df["Make"]= df["Make"].fillna('Unknown')
+df["Model"]= df["Model"].fillna('Unknown')
+df["Electric Vehicle Type"]= df["Electric Vehicle Type"].fillna('Unknown')
+df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"]= df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"].fillna('Unknown')
+df["Vehicle Location"]= df["Vehicle Location"].fillna('Unknown')
+df["Electric Utility"]= df["Electric Utility"].fillna('Unknown')
+df["2020 Census Tract"]= df["2020 Census Tract"].fillna('Unknown')
+# Fill missing categorical values with 'Unknown'
+
+#Explanation: Keep all rows to preserve large dataset integrity. Use mean imputation for numeric columns to avoid data loss. Use “Unknown” for categorical columns to maintain clarity while keeping categorical values. 
 
 #d)
-
+df["Model Year"] = pd.to_numeric(df["Model Year"])
+df["Electric Range"] = pd.to_numeric(df["Electric Range"])
+#Model Year should be numeric for trend or range calculations and electric range should also be numeric, since missing or non-numeric entries may have been stored as strings.

@@ -6,4 +6,11 @@ import seaborn as sns
 df = pd.read_csv("Electric_Vehicle_Population_Data.csv")
 
 
-print(df.isnull())
+
+
+df['Model Year'] = pd.to_numeric(df['Model Year'])
+df['Electric Range'] = pd.to_numeric(df['Electric Range'])
+
+
+
+print(df.info())
