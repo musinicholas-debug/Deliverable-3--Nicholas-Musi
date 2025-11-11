@@ -28,7 +28,6 @@ print(df.drop_duplicates())
 print(df.isnull().sum())
 #Check missing values per column
 
-df["Electric Range"]= df["Electric Range"].fillna(df["Electric Range"].mean())
 df["Postal Code"]= df["Postal Code"].fillna(df["Postal Code"].mean())
 df["Model Year"]= df["Model Year"].fillna(df["Model Year"].mean())
 df["Electric Range"]= df["Electric Range"].fillna(df["Electric Range"].mean())
@@ -55,3 +54,69 @@ df["2020 Census Tract"]= df["2020 Census Tract"].fillna('Unknown')
 df["Model Year"] = pd.to_numeric(df["Model Year"])
 df["Electric Range"] = pd.to_numeric(df["Electric Range"])
 #Model Year should be numeric for trend or range calculations and electric range should also be numeric, since missing or non-numeric entries may have been stored as strings.
+
+#For my specific data set I have no collums that I need to convert.
+
+#Univariable non-graphical EDA
+
+
+#Univariable graphical EDA
+
+#The two numerical value collum that dont't apply for this part would be "postal code" for the simple reason that it is random and doesn't follow any perticular pattern and therefore won't lead to any interesting questions.
+#Also the DOl Vehicle ID would not apply because it is random as well. 
+
+#plots (add bins size)
+df_numerical = ["Electric Range", "Model Year","Base MSRP","Legislative District"]
+for i in df_numerical:
+     sns.displot(data=df, x=i, hue="Electric Vehicle Type",kind="kde")
+
+
+#Multivariate non-graphical EDA
+#a)
+ctab=pd.crosstab(df["Model Year"], df["Electric Range"])
+print(ctab)
+
+ctab2= pd.crosstab(df["Base MSRP"], df["Electric Vehicle Type"])
+print(ctab2)
+
+ctab3= pd.crosstab(df["Electric Utility"], df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"])
+print(ctab3)
+
+
+#b)
+ctab=pd.crosstab(df["Model Year"], df["Electric Range"])
+print(ctab)
+
+ctab2= pd.crosstab(df["Base MSRP"], df["Electric Vehicle Type"])
+print(ctab2)
+
+ctab3= pd.crosstab(df["Electric Utility"], df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"])
+print(ctab3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
