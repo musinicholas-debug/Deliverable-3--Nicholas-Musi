@@ -84,17 +84,19 @@ print(ctab3)
 
 
 #b)
-ctab=pd.crosstab(df["Model Year"], df["Electric Range"])
-print(ctab)
+ctab_p=pd.crosstab(df["Model Year"], df["Electric Range"], normalize="index")
+print(ctab_p)
 
-ctab2= pd.crosstab(df["Base MSRP"], df["Electric Vehicle Type"])
-print(ctab2)
+ctab2_p= pd.crosstab(df["Base MSRP"], df["Electric Vehicle Type"], normalize="columns")
+print(ctab2_p)
 
-ctab3= pd.crosstab(df["Electric Utility"], df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"])
-print(ctab3)
+ctab3_p= pd.crosstab(df["Electric Utility"], df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"], normalize=True)
+print(ctab3_p)
 
 
-
+#c)
+three_way=pd.crosstab(columns=[df["Model Year"],df["Electric Range"],df["Base MSRP"]], normalize="columns")
+print(three_way)
 
 
 
