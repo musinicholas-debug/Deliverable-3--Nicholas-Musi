@@ -4,7 +4,6 @@
 #"'Nicholas Musi"'
 
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the filtered CSV dataset
@@ -39,26 +38,37 @@ numeric_col = df.select_dtypes(include=["number"]).columns
 categorical_col = df.select_dtypes(exclude=["number"]).columns
 
 
-# Strategy:
+# Strategy B and C:
 df[numeric_col] = df[numeric_col].fillna(df[numeric_col].median())
 df[categorical_col] = df[categorical_col].fillna("Unknown")
 
 print(df.isnull().sum())
-#Explanation of code: for this part I had originaly coded it column by column creating a massive bunch of code, to simplify I used a loop. To start I split both my numerical and categorical columns into their own variables.
-#To then use fillna to replace all numeric values missing with the median and all categorical values with unknow.
-
-
-
-#Keep all rows to preserve large dataset integrity. Use mean imputation for numeric columns to avoid data loss. Use “Unknown” for categorical columns to maintain clarity while keeping categorical values. 
+#Explanation of code: for this part I had originaly coded it column by column creating a massive bunch of code, to simplify I used a "loop". To start I split both my numerical and categorical columns into their own variables.
+#To then use fillna to replace all numeric values missing with the median and all categorical values missing with unknow.
 
 #d)
 #For my specific data set I have no collums that I need to convert.
 
 
-
 #3 Univariable non-graphical EDA
 
+#numerical
+for i in numeric_col:
+    if i in df:
+        print(df[i].mean())
+        print(df[i].median())
+        print(df[i].mode().values)
+        print(df[i].std())
+        print(df[i].var())
+        print(df[i].skew())
+        print(df[i].kurt())
+        print(df[i].quantile([0.25, 0.50, 0.75]))
 
+#categorical
+for i in categorical_col:
+    if i in df:
+        print(df[i].value_counts())
+        print(df[i].value_counts(normalize=True))
 
 
 
@@ -71,9 +81,6 @@ print(df.isnull().sum())
 df_numerical = ["Electric Range", "Model Year","Base MSRP","Legislative District"]
 for i in df_numerical:
      sns.displot(data=df, x=i, hue="Electric Vehicle Type",kind="kde")
-
-
-
 
 
 #5 Multivariate non-graphical EDA
@@ -104,6 +111,17 @@ print(ctab3_p.head(10))
 three_way=pd.crosstab([df["County"],df["Electric Vehicle Type"]] ,df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"], normalize="index")
 print(three_way.head(10))
 
+
+
+
+
+
+
+
+
+
+
+
 #6 Multivariate graphical EDA
 
 # For some plots, it's easier to work with a subset (e.g. top 5 makes)
@@ -115,27 +133,27 @@ df_top = df[df["Make"].isin(top_makes)].copy()
 #6.1.Visualizing statistical relationships (5 plots):
 
 #a) 
-sns.relplot(data=df_top , x="Model Year", y="Electric Range", col="Electric Vehicle Type")
+#sns.relplot(data=df_top , x="Model Year", y="Electric Range", col="Electric Vehicle Type")
 
 #b)
-sns.relplot( data=df_top, x="Model Year", y="Electric Range", hue="Electric Vehicle Type", size="Base MSRP", col="Make")
+#sns.relplot( data=df_top, x="Model Year", y="Electric Range", hue="Electric Vehicle Type", size="Base MSRP", col="Make")
 
 #c)
-sns.lmplot( data=df, x="Model Year", y="Electric Range", hue="Electric Vehicle Type", scatter_kws={"alpha": 0.3})
+#sns.lmplot( data=df, x="Model Year", y="Electric Range", hue="Electric Vehicle Type", scatter_kws={"alpha": 0.3})
 
 #6.2.Visualizing categorical data (10 plots):
     
 #a) 
-sns.stripplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", jitter=False)
+#sns.stripplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", jitter=False)
 
 #b)
-
+#sns.swarmplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", hue="Make")
 
 #c)
-sns.boxenplot(data=df_top, x="Make", y="Electric Range")
+#sns.boxenplot(data=df_top, x="Make", y="Electric Range")
 
 #d)
-sns.violinplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", hue="Make", split=True)
+#sns.violinplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", hue="Make", split=True)
 
 #e)
 
