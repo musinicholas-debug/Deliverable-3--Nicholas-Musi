@@ -33,24 +33,43 @@ print(df.shape)
 print(df.isnull().sum())
 #Check missing values per column
 
-# Separate numeric and categorical columns
-numeric_col = df.select_dtypes(include=["number"]).columns
-categorical_col = df.select_dtypes(exclude=["number"]).columns
+
+# Strategy B and C: 
+df["Postal Code"]= df["Postal Code"].fillna(df["Postal Code"].mean())
+df["Model Year"]= df["Model Year"].fillna(df["Model Year"].mean())
+df["Electric Range"]= df["Electric Range"].fillna(df["Electric Range"].mean())
+df["Base MSRP"]= df["Base MSRP"].fillna(df["Base MSRP"].mean())
+df["Legislative District"]= df["Legislative District"].fillna(df["Legislative District"].mean())
+df["DOL Vehicle ID"]= df["DOL Vehicle ID"].fillna(df["DOL Vehicle ID"].mean())
 
 
-# Strategy B and C:
-df[numeric_col] = df[numeric_col].fillna(df[numeric_col].median())
-df[categorical_col] = df[categorical_col].fillna("Unknown")
+df["County"]= df["County"].fillna('Unknown')
+df["City"]= df["City"].fillna('Unknown')
+df["State"]= df["State"].fillna('Unknown')
+df["Make"]= df["Make"].fillna('Unknown')
+df["Model"]= df["Model"].fillna('Unknown')
+df["Electric Vehicle Type"]= df["Electric Vehicle Type"].fillna('Unknown')
+df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"]= df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"].fillna('Unknown')
+df["Vehicle Location"]= df["Vehicle Location"].fillna('Unknown')
+df["Electric Utility"]= df["Electric Utility"].fillna('Unknown')
+df["2020 Census Tract"]= df["2020 Census Tract"].fillna('Unknown')
+
+
 
 print(df.isnull().sum())
-#Explanation of code: for this part I had originaly coded it column by column creating a massive bunch of code, to simplify I used a "loop". To start I split both my numerical and categorical columns into their own variables.
-#To then use fillna to replace all numeric values missing with the median and all categorical values missing with unknow.
+#Check missing values per column
+#Explanation of code: I used fillna to replace all numeric values missing with the median and all categorical values missing with unknown.
 
 #d)
 #For my specific data set I have no collums that I need to convert.
 
 
 #3 Univariable non-graphical EDA
+
+# Separate numeric and categorical columns
+numeric_col = df.select_dtypes(include=["number"]).columns
+categorical_col = df.select_dtypes(exclude=["number"]).columns
+#Explanation of code: I split both my numerical and categorical columns into their own variables.
 
 #numerical
 for i in numeric_col:
