@@ -118,7 +118,9 @@ print(three_way.head(10))
 # For some plots, it's easier to work with a subset (e.g. top 5 makes)
 top_makes = df["Make"].value_counts().head(5).index
 df_top = df[df["Make"].isin(top_makes)].copy()
-#explanation of code: 
+#explanation of code: This code selects the five most common car manufacturers in the dataset and then creates a smaller dataframe containing only the vehicles from those top brands.
+#First, top_makes = df["Make"].value_counts().head(5).index counts how many times each manufacturer appears, takes the top five, and extracts just their names. Then, df_top = df[df["Make"].isin(top_makes)].copy() filters 
+#the original dataset to keep only the rows where the “Make” is one of those top five manufacturers, creating a clean copy. This smaller dataset is useful for making clearer, less cluttered plots and comparisons.
 
 
 #6.1.Visualizing statistical relationships (5 plots):
