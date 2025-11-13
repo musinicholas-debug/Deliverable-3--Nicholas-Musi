@@ -5,6 +5,7 @@
 
 import pandas as pd
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Load the filtered CSV dataset
 df = pd.read_csv("Electric_Vehicle_Population_Data.csv")
@@ -137,7 +138,7 @@ print(three_way.head(10))
 # For some plots, it's easier to work with a subset (e.g. top 5 makes)
 top_makes = df["Make"].value_counts().head(5).index
 df_top = df[df["Make"].isin(top_makes)].copy()
-#explanation of code: This code selects the five most common car manufacturers in the dataset and then creates a smaller dataframe containing only the vehicles from those top brands.
+#explanation of code: This code selects the five most common car manufacturers in the dataset and then creates a smaller dataset containing only the vehicles from those top brands.
 #First, top_makes = df["Make"].value_counts().head(5).index counts how many times each manufacturer appears, takes the top five, and extracts just their names. Then, df_top = df[df["Make"].isin(top_makes)].copy() filters 
 #the original dataset to keep only the rows where the “Make” is one of those top five manufacturers, creating a clean copy. This smaller dataset is useful for making clearer, less cluttered plots and comparisons.
 
@@ -145,39 +146,74 @@ df_top = df[df["Make"].isin(top_makes)].copy()
 #6.1.Visualizing statistical relationships (5 plots):
 
 #a) 
-#sns.relplot(data=df_top , x="Model Year", y="Electric Range", col="Electric Vehicle Type")
+sns.relplot(data=df_top , x="Model Year", y="Electric Range", col="Electric Vehicle Type")
+plt.suptitle("Model Year vs Electric Range by EV Type (Faceted)", y=1.02)
+plt.show()
 
 #b)
-#sns.relplot( data=df_top, x="Model Year", y="Electric Range", hue="Electric Vehicle Type", size="Base MSRP", col="Make")
+sns.relplot( data=df_top, x="Model Year", y="Electric Range", hue="Electric Vehicle Type", size="Base MSRP", col="Make")
+plt.suptitle("Electric Range vs Model Year (5 variables)", y=1.02)
+plt.show()
 
 #c)
-#sns.lmplot( data=df, x="Model Year", y="Electric Range", hue="Electric Vehicle Type", scatter_kws={"alpha": 0.3})
+sns.lmplot( data=df, x="Model Year", y="Electric Range", hue="Electric Vehicle Type",)
+plt.title("Linear Regression: Electric Range vs Model Year")
+plt.show()
 
 #6.2.Visualizing categorical data (10 plots):
     
 #a) 
-#sns.stripplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", jitter=False)
+sns.stripplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", jitter=False)
+plt.title("Linear Regression: Electric Range vs Model Year")
+plt.show()
 
 #b)
-#sns.swarmplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", hue="Make")
+
 
 #c)
-#sns.boxenplot(data=df_top, x="Make", y="Electric Range")
+sns.boxenplot(data=df_top, x="Make", y="Electric Range")
+plt.title("Boxenplot: Electric Range by Make")
+plt.xticks(rotation=45)
+plt.show()
 
 #d)
-#sns.violinplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", hue="Make", split=True)
+sns.violinplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", hue="Make", split=True)
+plt.title("Split Violin: Electric Range by EV Type and Make")
+plt.show()
+
 
 #e)
+sns.violinplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", inner=None)
+sns.stripplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", color="black")
+
+plt.title("Violin + Scatter: Electric Range by EV Type")
+plt.show()
 
 #f)
+sns.pointplot(data=df_top, x="Model Year", y="Electric Range", hue="Electric Vehicle Type", ci=90, linestyles="--")
+plt.title("Point Plot: Electric Range by Year and EV Type (90% CI)")
+plt.xticks(rotation=45)
+plt.show()
 
 #g)
+sns.countplot(data=df, x="Electric Vehicle Type")
+plt.title("Number of Vehicles by Type")
+plt.xticks(rotation=15)
+plt.show()
 
 #6.3. Visualizing bivariate distributions (3 plots):
     
 #a)
+heatmap_data = pd.crosstab(pd.cut(df["Model Year"], bins=10), pd.cut(df["Electric Range"], bins=10))
+
+sns.heatmap( heatmap_data, cmap="viridis")
+plt.title("Heatmap: Model Year vs Electric Range")
+plt.xlabel("Electric Range bins")
+plt.ylabel("Model Year bins")
+plt.show()
 
 #b)
+
 
 
 
