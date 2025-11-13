@@ -77,10 +77,10 @@ for i in categorical_col:
 #The two numerical value collum that dont't apply for this part would be "postal code" for the simple reason that it is random and doesn't follow any perticular pattern and therefore won't lead to any interesting questions.
 #Also the DOl Vehicle ID would not apply because it is random as well. 
 
-#plots (add bins size)
+#plots
 df_numerical = ["Electric Range", "Model Year","Base MSRP","Legislative District"]
 for i in df_numerical:
-     sns.displot(data=df, x=i, hue="Electric Vehicle Type",kind="kde")
+     sns.displot(data=df, x=i, hue="Electric Vehicle Type", kind="hist", bins=30, stat="density", kde=True)
 
 
 #5 Multivariate non-graphical EDA
@@ -110,15 +110,6 @@ print(ctab3_p.head(10))
 #c)
 three_way=pd.crosstab([df["County"],df["Electric Vehicle Type"]] ,df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"], normalize="index")
 print(three_way.head(10))
-
-
-
-
-
-
-
-
-
 
 
 
