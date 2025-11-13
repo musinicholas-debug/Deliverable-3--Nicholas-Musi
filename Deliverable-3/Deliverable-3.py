@@ -1,3 +1,7 @@
+#Programming in science
+#November 4th 2025
+#Tiago Bortoletto Vaz
+#"'Nicholas Musi"'
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -7,7 +11,7 @@ import seaborn as sns
 df = pd.read_csv("Electric_Vehicle_Population_Data.csv")
 
 
-#Preliminary steps
+#2 Preliminary steps
 
 #a)
 print(df["Electric Range"].value_counts().head(10))
@@ -21,46 +25,46 @@ print(df.describe())
 
 
 #b)
-print(df.duplicated())
-print(df.drop_duplicates())
+print(df.duplicated().sum())
+df = df.drop_duplicates()
+print(df.shape)
+
 
 #c)
 print(df.isnull().sum())
 #Check missing values per column
 
-df["Postal Code"]= df["Postal Code"].fillna(df["Postal Code"].mean())
-df["Model Year"]= df["Model Year"].fillna(df["Model Year"].mean())
-df["Electric Range"]= df["Electric Range"].fillna(df["Electric Range"].mean())
-df["Base MSRP"]= df["Base MSRP"].fillna(df["Base MSRP"].mean())
-df["Legislative District"]= df["Legislative District"].fillna(df["Legislative District"].mean())
-df["DOL Vehicle ID"]= df["DOL Vehicle ID"].fillna(df["DOL Vehicle ID"].mean())
-#Fill missing numerical values with the mean
+# Separate numeric and categorical columns
+numeric_col = df.select_dtypes(include=["number"]).columns
+categorical_col = df.select_dtypes(exclude=["number"]).columns
 
-df["County"]= df["County"].fillna('Unknown')
-df["City"]= df["City"].fillna('Unknown')
-df["State"]= df["State"].fillna('Unknown')
-df["Make"]= df["Make"].fillna('Unknown')
-df["Model"]= df["Model"].fillna('Unknown')
-df["Electric Vehicle Type"]= df["Electric Vehicle Type"].fillna('Unknown')
-df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"]= df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"].fillna('Unknown')
-df["Vehicle Location"]= df["Vehicle Location"].fillna('Unknown')
-df["Electric Utility"]= df["Electric Utility"].fillna('Unknown')
-df["2020 Census Tract"]= df["2020 Census Tract"].fillna('Unknown')
+
+# Strategy:
+# Fill missing numerical values with the mean
 # Fill missing categorical values with 'Unknown'
-#Explanation: Keep all rows to preserve large dataset integrity. Use mean imputation for numeric columns to avoid data loss. Use “Unknown” for categorical columns to maintain clarity while keeping categorical values. 
+for col in numeric_col:
+    median_value = df[col].median()
+    df[col] = df[col].fillna(median_value)
+
+for col in categorical_col:
+    df[col] = df[col].fillna("Unknown")
+    
+print(df.isnull().sum())
+#Explanation of code: for this part I had originaly coded it column by column creating a massive bunch of code, to simplify I used a loop. To start I split both my numerical and categorical columns into their own variables.
+#To then use them in the loop using the col function that I found and researched online. It let create a loop for the numerical and categorical values respectively allowing me to replace them with the median and "unknown".
+
+
+
+#Keep all rows to preserve large dataset integrity. Use mean imputation for numeric columns to avoid data loss. Use “Unknown” for categorical columns to maintain clarity while keeping categorical values. 
+
 
 #d)
-#*************
-df["Model Year"] = pd.to_numeric(df["Model Year"])
-df["Electric Range"] = pd.to_numeric(df["Electric Range"])
-#Model Year should be numeric for trend or range calculations and electric range should also be numeric, since missing or non-numeric entries may have been stored as strings.
-
 #For my specific data set I have no collums that I need to convert.
 
-#Univariable non-graphical EDA
+#3 Univariable non-graphical EDA
 
 
-#Univariable graphical EDA
+#4 Univariable graphical EDA
 
 #The two numerical value collum that dont't apply for this part would be "postal code" for the simple reason that it is random and doesn't follow any perticular pattern and therefore won't lead to any interesting questions.
 #Also the DOl Vehicle ID would not apply because it is random as well. 
@@ -71,32 +75,35 @@ for i in df_numerical:
      sns.displot(data=df, x=i, hue="Electric Vehicle Type",kind="kde")
 
 
-#Multivariate non-graphical EDA
+#5 Multivariate non-graphical EDA
+
 #a)
 ctab=pd.crosstab(df["Model Year"], df["Electric Range"])
-print(ctab)
+print(ctab.head(10))
 
 ctab2= pd.crosstab(df["Base MSRP"], df["Electric Vehicle Type"])
-print(ctab2)
+print(ctab2.head(10))
 
 ctab3= pd.crosstab(df["Electric Utility"], df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"])
-print(ctab3)
+print(ctab3.head(10))
 
 
 #b)
 ctab_p=pd.crosstab(df["Model Year"], df["Electric Range"], normalize="index")
-print(ctab_p)
+print(ctab_p.head(10))
 
 ctab2_p= pd.crosstab(df["Base MSRP"], df["Electric Vehicle Type"], normalize="columns")
-print(ctab2_p)
+print(ctab2_p.head(10))
 
 ctab3_p= pd.crosstab(df["Electric Utility"], df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"], normalize=True)
-print(ctab3_p)
+print(ctab3_p.head(10))
 
 
 #c)
-three_way=pd.crosstab(columns=[df["Model Year"],df["Electric Range"],df["Base MSRP"]], normalize="columns")
-print(three_way)
+three_way=pd.crosstab([df["County"],df["Electric Vehicle Type"]] ,df["Clean Alternative Fuel Vehicle (CAFV) Eligibility"], normalize="index")
+print(three_way.head(10))
+
+
 
 
 
