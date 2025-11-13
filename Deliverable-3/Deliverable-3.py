@@ -129,11 +129,13 @@ sns.lmplot( data=df, x="Model Year", y="Electric Range", hue="Electric Vehicle T
 sns.stripplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", jitter=False)
 
 #b)
-sns.catplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", hue="Make", kind="swarm")
+
 
 #c)
+sns.boxenplot(data=df_top, x="Make", y="Electric Range")
 
 #d)
+sns.violinplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", hue="Make", split=True)
 
 #e)
 
