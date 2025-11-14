@@ -214,6 +214,12 @@ plt.title("Heatmap: Model Year vs Electric Range")
 plt.xlabel("Electric Range bins")
 plt.ylabel("Model Year bins")
 plt.show()
+#explanation of code: This code creates a heatmap that shows how vehicles are distributed across different Model Year ranges and Electric Range ranges. 
+#First, pd.cut(df["Model Year"], bins=10) divides all model years into 10 equal-sized bins (for example: 2000–2002, 2002–2004, etc.). 
+#The same is done for electric range using pd.cut(df["Electric Range"], bins=10), which groups the electric ranges into 10 interval categories. 
+#The pd.crosstab() function then counts how many vehicles fall into each combination of these two categories, creating a two-dimensional table. 
+#This table is saved as heatmap_data.
+
 
 #b)
 #sns.displot(data=df, x="Model Year", y="Electric Range", kind="kde", fill=False, levels=10, thresh=0.05  )
