@@ -147,7 +147,7 @@ df_top = df[df["Make"].isin(top_makes)].copy()
 
 #a) 
 sns.relplot(data=df_top , x="Model Year", y="Electric Range", col="Electric Vehicle Type")
-plt.suptitle("Model Year vs Electric Range by EV Type (Faceted)", y=1.02)
+plt.suptitle("Model Year vs Electric Range by EV Type", y=1.02)
 plt.show()
 
 #b)
