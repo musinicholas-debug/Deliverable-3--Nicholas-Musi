@@ -168,10 +168,14 @@ plt.title("Linear Regression: Electric Range vs Model Year")
 plt.show()
 
 #b)
-#sns.swarmplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", hue="Make")
+sns.swarmplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", hue="Make", s=0.001)
 #plt.title("Beeswarm: Electric Range by EV Type and Make")
 #plt.show()
 #This specific is not loading with my data set im assuming since its too big the spyder program cant load it I left it in # for you to see it.
+#sns.catplot(data=df_top, x="Model Year", y="Electric Range", hue="Make", kind="swarm", s=0.0001)
+#C:\Users\Nicholas\AppData\Local\spyder-6\envs\spyder-runtime\Lib\site-packages\seaborn\categorical.py:3399: UserWarning: 99.1% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
+#warnings.warn(msg, UserWarning)
+#after trying both swarmplot and catplot this plot will not load i have tried many different variables and all don't work the error I am getting is above
 
 #c)
 sns.boxenplot(data=df_top, x="Make", y="Electric Range")
