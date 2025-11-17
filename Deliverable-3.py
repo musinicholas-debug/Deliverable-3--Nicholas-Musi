@@ -225,7 +225,7 @@ plt.show()
 
 
 #b)
-sns.displot(data=df, x="Model Year", y="Electric Range", kind="kde")
+#sns.displot(data=df, x="Model Year", y="Electric Range", kind="kde", fill=False, levels=10, thresh=0.05  )
 #plt.suptitle("Bivariate KDE: Model Year vs Electric Range", y=1.02)
 #plt.show()
 #This specific is not loading with my data set im assuming since its too big the spyder program cant load it I left it in # for you to see it.
