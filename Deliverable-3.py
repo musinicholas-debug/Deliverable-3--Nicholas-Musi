@@ -1,5 +1,5 @@
 #Programming in science
-#November 4th 2025
+#December 7th, 2025
 #Tiago Bortoletto Vaz
 #"'Nicholas Musi"'
 
@@ -146,19 +146,24 @@ df_top = df[df["Make"].isin(top_makes)].copy()
 #6.1.Visualizing statistical relationships (5 plots):
 
 #a) 
-sns.relplot(data=df_top , x="Model Year", y="Electric Range", col="Electric Vehicle Type")
-plt.suptitle("Model Year vs Electric Range by EV Type", y=1.02)
+sns.relplot(data=df_top , x="Make", y="Electric Range", col="Electric Vehicle Type")
+plt.suptitle("Make vs Electric Range by EV Type", y=1.02)
 plt.show()
+
 
 #b)
 sns.relplot( data=df_top, x="Model Year", y="Electric Range", hue="Electric Vehicle Type", size="Base MSRP", col="Make")
 plt.suptitle("Electric Range vs Model Year (5 variables)", y=1.02)
 plt.show()
 
-#c)
-sns.lmplot( data=df, x="Model Year", y="Electric Range", hue="Electric Vehicle Type",)
-plt.title("Linear Regression: Electric Range vs Model Year")
+#C)
+# Filter out outliers above $400,000
+df_filtered = df[df["Base MSRP"] <= 100000]
+
+sns.lmplot( data=df_filtered, x="Base MSRP", y="Electric Range", hue="Electric Vehicle Type")
+plt.title("Linear Regression: Electric Range vs Base MSRP")
 plt.show()
+              
 
 #6.2.Visualizing categorical data (10 plots):
     
@@ -190,8 +195,7 @@ plt.show()
 
 
 #e)
-sns.violinplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", inner=None)
-sns.stripplot(data=df_top, x="Electric Vehicle Type", y="Electric Range", color="black")
+sns.violinplot(data=df_top, x="Electric Vehicle Type", y="Model Year", inner=None)
 plt.title("Violin + Scatter: Electric Range by EV Type")
 plt.show()
 
